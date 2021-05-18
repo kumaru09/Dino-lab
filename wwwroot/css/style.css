@@ -200,6 +200,89 @@ input[type="text"] {
   text-align: center;
 }
 
+.blacklist-title {
+  display: grid;
+  grid-template-columns: auto 250px;
+  grid-template-rows: 50px;
+  border-color: black; 
+  border-bottom-style: solid;
+  margin-top: 0.5rem;
+}
+.blacklist-item {
+  display: grid;
+  grid-template-columns: auto 250px;
+  grid-template-rows: 75px;
+  background-color: #ffffff;
+  width: 100%;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 10px;
+  color: #000000;
+}
+.blacklist-font {
+  font-family: DinoStyle; 
+  text-align: left; 
+  margin-left: 20px;
+  margin-top: 15px;
+}
+.blacklist-grid-a {
+  margin: auto;
+  grid-column-start: 1;
+  grid-column-end: 2;
+}
+.blacklist-grid-b {
+
+  grid-column-start: 2;
+  grid-column-end: 3;
+}
+.blacklist-input {
+  width: 170px;
+  height: 40px;
+  margin: auto;
+  font-size: 1.25rem;
+}
+
+
+.admin-title {
+  display: grid;
+  grid-template-columns: 20% 60% 20%;
+  grid-template-rows: 50px;
+  border-top-style: solid;
+  border-color: black; 
+  border-bottom-style: solid;
+}
+.admin-list-item {
+  display: grid;
+  grid-template-columns: 20% 60% 20%;
+  grid-template-rows: 75px;
+  background-color: #ffffff;
+  width: 100%;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 10px;
+  color: #000000;
+}
+.title-font {
+  font-family: DinoStyle;
+  text-align: center;
+}
+.grid-item-a {
+  margin: auto;
+  grid-column-start: 1;
+  grid-column-end: 2;
+}
+.grid-item-b {
+  margin: auto;
+  grid-column-start: 2;
+  grid-column-end: 3;
+}
+.grid-item-c {
+  margin: auto;
+  grid-column-start: 3;
+  grid-column-end: 4;
+}
+
+
 .item-rental h4 {
   color: #ff444d;
 }
