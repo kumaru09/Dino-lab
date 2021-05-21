@@ -412,22 +412,27 @@ input[type="text"] {
 .tablist {
   display: flex;
   flex-wrap: nowrap;
-  width: 800px;
+  width: 100%;
 }
 
 .tablist-item {
-  width: 150px;
+  /* display: flex; */
+  width: 100%;
   height: 50px;
   background-color: #2a4860;
   text-decoration: none;
   border:none;
   color: white;
-  margin-right: 1rem;
+  margin-right: 1vw;
   text-align: center;
   padding-top: 15px;
   font-family: DinoStyle;
   cursor: pointer;
   box-shadow: 0 3px rgba(0, 0, 0, 0.2);
+}
+
+.tablist-item:last-child {
+  margin-right: 0;
 }
 
 .tab-active, .tablist-item:hover {
@@ -483,11 +488,15 @@ input[type="text"] {
   .mobile {
     display: block;
   }
-  th {
-    padding: 0.5em 1em;
+}
+
+@media (max-width: 700px){
+  .tablist {
+    display: block;
+    width: 540px;
   }
-  th {
-    padding: 0.5em 1em;
+  .tablist-item{
+    width: 100px;
   }
 }
 
