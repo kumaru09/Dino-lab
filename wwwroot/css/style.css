@@ -396,15 +396,14 @@ input[type="text"] {
   padding: 0.5rem 1rem;
 }
 
-/* ------------------------------- me!!!!!!!! ------------------------------- */
-
 .topic {
-  margin: 1rem 0;
+  margin-top: 1rem;
   font-family: DinoStyle;
 }
 
 .tab {
   overflow: auto;
+  width: 100%;
   white-space: nowrap;
   padding-bottom: 5px;
   margin-bottom: 1rem;
@@ -413,34 +412,27 @@ input[type="text"] {
 .tablist {
   display: flex;
   flex-wrap: nowrap;
-  width: 1000px;
+  width: 800px;
 }
 
-.tablist > div {
+.tablist-item {
   width: 150px;
   height: 50px;
   background-color: #2a4860;
-  box-shadow: 0 4px rgba(0, 0, 0, 0.2);
+  text-decoration: none;
+  border:none;
   color: white;
   margin-right: 1rem;
   text-align: center;
   padding-top: 15px;
   font-family: DinoStyle;
   cursor: pointer;
+  box-shadow: 0 3px rgba(0, 0, 0, 0.2);
 }
 
-.table {
-  background-color: #ffffff;
-  width: 100%;
-  margin-bottom: 1rem;
-  display: flex;
-  flex-direction: row;
-  border-radius: 10px;
-  justify-content: flex-start;
-  color: #000000;
-  text-align: left;
-  padding: 1rem;
-  align-items: stretch;
+.tab-active, .tablist-item:hover {
+  background-color: #ff444d;
+  box-shadow: none;
 }
 
 .item-info {
@@ -458,8 +450,8 @@ input[type="text"] {
 }
 
 .item-image {
-  width: 20%;
-  height: 200px;
+  width: 200px;
+  height: auto;
   background-image: url(../Banner.png);
   background-repeat: no-repeat;
   background-size: cover;
@@ -471,17 +463,31 @@ input[type="text"] {
   width: 80%;
 }
 
+.mobile {
+  display: none;
+}
+
 @media (max-width: 800px) {
   .item-info {
     flex-direction: column;
   }
   .item-image {
     width: 100%;
+    height: 200px;
     margin: 0 0 1rem 0; /* L T B R */
   }
   .item-detail,
-  input[type="submit"] {
+  #inputSubmit {
     width: 100%;
+  }
+  .mobile {
+    display: block;
+  }
+  th {
+    padding: 0.5em 1em;
+  }
+  th {
+    padding: 0.5em 1em;
   }
 }
 
@@ -502,7 +508,7 @@ input[name="time"]{
   padding: 5px 8px;
 }
 
-input[type="submit"] {
+#inputSubmit {
   background-color: #ff444d;
   color: white;
   padding: 12px 20px;
@@ -516,6 +522,7 @@ table {
   display: flex;
   width: 100%;
   border-collapse: collapse;
+  margin-bottom: 1rem;
 }
 
 tbody {
@@ -523,26 +530,32 @@ tbody {
   position: relative;
   overflow-x: auto;
   overflow-y: hidden;
-  /* max-width: 100%; */
-  /* width: 100%; */
   background-color: white;
+  text-align: center;
 }
-
-tr > td:nth-child(even){background-color: #f2f2f2;}
 
 th {
   background-color: #1F2833;
   color: #fff;
-  text-align: center;
 }
 
-td {
-  text-align: right;
+table, td, th {  
+  border: 1px solid #ddd;
 }
 
-th,
-td {
-  padding: 0.5em 1em;
+th, td {
+  padding: 1vh 1.3vw;
+  font-size: 1.1em;
   white-space: nowrap;
   display: block;
+}
+
+.td-active {
+  background-color: #ff444d;
+  color: white;
+}
+
+.td-disable {
+  background-color: #f2f2f2;;
+  color: darkgray;
 }

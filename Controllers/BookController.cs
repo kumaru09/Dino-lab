@@ -20,6 +20,9 @@ namespace Dinolab.Controllers
 
         public IActionResult Index()
         {
+            DateTime startDate = DateTime.UtcNow.Date;
+            DateTime endDate = startDate.AddDays(14).Date;
+            ViewBag.startDate = startDate;
             return View();
         }
 

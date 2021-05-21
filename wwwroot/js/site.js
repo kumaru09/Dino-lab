@@ -36,8 +36,7 @@ regLink.onclick = () => {
   regModal.style.display = "block";
 }
 
-function setInputDate() {
-
+function setDataBookingPage() {
   var d = new Date();
   var maxd = new Date();
   var t = d.toTimeString().slice(0,3);
@@ -63,19 +62,12 @@ function setInputDate() {
   document.getElementById("inputDay").value = document.getElementById("inputDay").min;
   
   //set table date
-  document.getElementById("d1").innerHTML = d.toLocaleDateString();
-  d.setDate(d.getDate() + 1);
-  document.getElementById("d2").innerHTML = d.toLocaleDateString();
-  d.setDate(d.getDate() + 1);
-  document.getElementById("d3").innerHTML = d.toLocaleDateString();
-  d.setDate(d.getDate() + 1);
-  document.getElementById("d4").innerHTML = d.toLocaleDateString();
-  d.setDate(d.getDate() + 1);
-  document.getElementById("d5").innerHTML = d.toLocaleDateString();
-  d.setDate(d.getDate() + 1);
-  document.getElementById("d6").innerHTML = d.toLocaleDateString();
-  d.setDate(d.getDate() + 1);
-  document.getElementById("d7").innerHTML = d.toLocaleDateString();
+  var id,i;
+  for(i=1; i<=7; i++){
+    id = "d" + i.toString();
+    document.getElementById(id).innerHTML = d.toDateString().slice(0,10);
+    d.setDate(d.getDate() + 1);
+  }
 }
 
 function timeStepUp() {
@@ -84,7 +76,6 @@ function timeStepUp() {
   var num = parseInt(document.getElementById("inputHr").max);
   if (num > 1) {
     num -= 1;
-    console.log("num- : "+num);
     document.getElementById("inputHr").max = num.toString();
     if(document.getElementById("inputHr").value > document.getElementById("inputHr").max) {
       document.getElementById("inputHr").value = document.getElementById("inputHr").max;
@@ -98,7 +89,6 @@ function timeStepDown() {
   var num = parseInt(document.getElementById("inputHr").max);
   if (num < 7) {
     num += 1;
-    console.log("num+ : "+num);
     document.getElementById("inputHr").max = num.toString();
   }
 }
