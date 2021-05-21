@@ -47,7 +47,7 @@ public class AuthManagementController : ControllerBase
                 });
             }
 
-            var newUser = new IdentityUser() { Email = user.Email, UserName = user.Email };
+            var newUser = new IdentityUser() { Email = user.Email, UserName = user.Username};
             var isCreated = await _userManager.CreateAsync(newUser, user.Password);
             if (isCreated.Succeeded)
             {
@@ -110,8 +110,7 @@ public class AuthManagementController : ControllerBase
                 return Ok(new RegistrationResponses()
                 {
                     Success = true,
-                    Token = jwtToken,
-                    email = email
+                    Token = jwtToken
                 });
             }
             else
