@@ -473,7 +473,6 @@ input[type="text"] {
 .item-image {
   width: 200px;
   height: auto;
-  background-image: url(../Banner.png);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -539,7 +538,7 @@ input[type="text"] {
     width: 540px;
   }
   .tablist-item{
-    width: 100px;
+    width: 150px;
   }
 }
 
@@ -621,4 +620,8 @@ th, td {
 .td-disable {
   background-color: #f2f2f2;;
   color: darkgray;
+}
+
+.tabcontent {
+  display: none;
 }
