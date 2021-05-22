@@ -29,22 +29,28 @@
     <div class="item-image"></div>
     <div class="item-detail">
         <form>
-            <p>อุปกรณ์ : Arduino </p>
-            <label for="inputNum">จำนวน : </label>
-            <input id="inputNum" type="number" min="1" max="10" value="1">
-            <br><br>
-            <label for="inputDay">วันที่ยืม : </label>
-            <input id="inputDay" type="date" onfocus="setDataBookingPage()">
-            <br><br>
-            <label for="inputTime">เวลาที่ยืม : </label>
-            <input id="inputTime" type="time" min="09:00" max="15:00" readonly required>
-            <input type="button" name="time" onclick="timeStepUp()" value="เพิ่ม">
-            <input type="button" name="time" onclick="timeStepDown()" value="ลด">
-            <br><br>
-            <label for="inputHr">จำนวนชั่วโมงที่ยืม : </label>
-            <input id="inputHr" type="number" min="1" max="7" value="1">
-            <div class="mobile"><br></div>
-            <input id="inputSubmit" type="submit" value="ยืมอุปกรณ์">
+            @{
+                DateTime inputDate = ViewBag.startDate;
+                string curTime = ViewBag.curTime;
+                string maxHr = ViewBag.maxHr;
+                <p>อุปกรณ์ : Arduino </p>
+                <label for="inputNum">จำนวน : </label>
+                <input id="inputNum" type="number" min="1" max="10" value="1">
+                <br><br>
+                <label for="inputDay">วันที่ยืม : </label>
+                <input id="inputDay" type="date" min="@(inputDate.ToString("yyyy-MM-dd"))"
+                    max="@(inputDate.AddDays(13).ToString("yyyy-MM-dd"))" value="@(inputDate.ToString("yyyy-MM-dd"))" onchange="updateMinTime()">
+                <br><br>
+                <label for="inputTime">เวลาที่ยืม : </label>
+                <input id="inputTime" type="time" min="@curTime" max="15:00" value="@curTime" readonly required>
+                <input type="button" name="time" onclick="timeStepUp()" value="เพิ่ม">
+                <input type="button" name="time" onclick="timeStepDown()" value="ลด">
+                <br><br>
+                <label for="inputHr">จำนวนชั่วโมงที่ยืม : </label>
+                <input id="inputHr" type="number" min="1" max="@maxHr" value="1">
+                <div class="mobile"><br></div>
+                <input id="inputSubmit" type="submit" value="ยืมอุปกรณ์">
+            }
         </form>
     </div>
 </div>

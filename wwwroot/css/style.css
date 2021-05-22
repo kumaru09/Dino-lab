@@ -396,6 +396,8 @@ input[type="text"] {
   padding: 0.5rem 1rem;
 }
 
+
+
 .topic {
   margin-top: 1rem;
   font-family: DinoStyle;
@@ -490,7 +492,7 @@ input[type="text"] {
   }
 }
 
-@media (max-width: 700px){
+@media (max-width: 550px){
   .tablist {
     display: block;
     width: 540px;
@@ -539,7 +541,7 @@ tbody {
   position: relative;
   overflow-x: auto;
   overflow-y: hidden;
-  background-color: white;
+  background-color: #fff;
   text-align: center;
 }
 
@@ -553,7 +555,7 @@ table, td, th {
 }
 
 th, td {
-  padding: 1vh 1.3vw;
+  padding: 1vh 1.25vw;
   font-size: 1.1em;
   white-space: nowrap;
   display: block;

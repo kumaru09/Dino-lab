@@ -11,6 +11,10 @@ var span = document.getElementsByClassName("close");
 var loginLink = document.getElementById("loginLink");
 var regLink = document.getElementById("regLink");
 
+var inputTime = document.getElementById("inputTime");
+var inputHr = document.getElementById("inputHr");
+var inputHrMaxInt = parseInt(inputHr.max);
+
 loginBtn.onclick = () => {
   loginModal.style.display = "block";
 };
@@ -36,59 +40,51 @@ regLink.onclick = () => {
   regModal.style.display = "block";
 }
 
-function setDataBookingPage() {
-  var d = new Date();
-  var maxd = new Date();
-  var t = d.toTimeString().slice(0,3);
 
-  //set input time
-  document.getElementById("inputTime").value = document.getElementById("inputTime").min;
-  if ( parseInt(t) < 16 ) {
-    if( parseInt(t) >= 9) {
-      document.getElementById("inputTime").value = d.toTimeString().slice(0,3) + "00";
-      var maxHour = 16 - parseInt(t);
-      document.getElementById("inputHr").max = maxHour.toString();
+var tabItem = document.getElementsByClassName("tablist-item");
+for (var i = 0; i < tabItem.length; i++) {
+  tabItem[i].addEventListener("click", function() {
+  var current = document.getElementsByClassName("tab-active");
+  current[0].className = current[0].className.replace(" tab-active", "");
+  this.className += " tab-active";
+  });
+}
+
+function updateMinTime(){
+  var today = new Date();
+  var inputDay = document.getElementById("inputDay");
+  if(inputDay == today.toISOString().slice(0,10)){
+    inputTime.min = today.toTimeString().slice(0,3) + "00";
+    if(inputTime.value < inputTime.min){
+      inputTime.value = inputTime.min;
     }
   }
-  else {
-    d.setDate(d.getDate()+1);
-    maxd.setDate(maxd.getDate()+1);
-  }
-
-  //set input date
-  maxd.setDate(maxd.getDate() + 6);
-  document.getElementById("inputDay").min = d.toISOString().slice(0,10);
-  document.getElementById("inputDay").max = maxd.toISOString().slice(0,10);
-  document.getElementById("inputDay").value = document.getElementById("inputDay").min;
-  
-  //set table date
-  var id,i;
-  for(i=1; i<=7; i++){
-    id = "d" + i.toString();
-    document.getElementById(id).innerHTML = d.toDateString().slice(0,10);
-    d.setDate(d.getDate() + 1);
+  else{
+    inputTime.min = "09:00";
   }
 }
 
 function timeStepUp() {
-  document.getElementById("inputTime").stepUp(60);
-  //update inputHr max
-  var num = parseInt(document.getElementById("inputHr").max);
-  if (num > 1) {
-    num -= 1;
-    document.getElementById("inputHr").max = num.toString();
-    if(document.getElementById("inputHr").value > document.getElementById("inputHr").max) {
-      document.getElementById("inputHr").value = document.getElementById("inputHr").max;
+  if(inputTime.value != inputTime.max){
+    inputTime.stepUp(60);
+     //update inputHr max
+    if (inputHrMaxInt > 1) {
+      inputHrMaxInt -= 1;
+      inputHr.max = inputHrMaxInt.toString();
+      if(inputHr.value > inputHr.max) {
+        inputHr.value = inputHr.max;
+      }
     }
-  }
+  } 
 }
 
 function timeStepDown() {
-  document.getElementById("inputTime").stepDown(60);
-  //update inputHr max
-  var num = parseInt(document.getElementById("inputHr").max);
-  if (num < 7) {
-    num += 1;
-    document.getElementById("inputHr").max = num.toString();
-  }
+  if(inputTime.value != inputTime.min){
+    inputTime.stepDown(60);
+     //update inputHr max
+    if (inputHrMaxInt < 7) {
+      inputHrMaxInt += 1;
+      inputHr.max = inputHrMaxInt.toString();
+    }
+  } 
 }
