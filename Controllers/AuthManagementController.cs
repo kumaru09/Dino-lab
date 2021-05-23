@@ -151,7 +151,7 @@ public class AuthManagementController : ControllerBase
             Subject = new ClaimsIdentity(new[]
             {
                 new Claim("Id", user.Id),
-                new Claim(JwtRegisteredClaimNames.Sub, user.Email),
+                new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
                 new Claim(JwtRegisteredClaimNames.Email, user.Email),
                 // the JTI is used for our refresh token which we will be convering in the next video
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
