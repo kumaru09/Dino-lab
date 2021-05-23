@@ -1,3 +1,4 @@
+using Dinolab.Data;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,5 +11,7 @@ namespace Dinolab
         {
 
         }
+
+        public DbSet<ItemList> ItemList {get; set;}
     }
 }

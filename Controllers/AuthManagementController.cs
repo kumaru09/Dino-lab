@@ -5,9 +5,9 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using dinolab;
-using dinolab.Models.DTOs.Requests;
-using dinolab.Models.DTOs.Responses;
+using Dinolab;
+using Dinolab.Models.DTOs.Requests;
+using Dinolab.Models.DTOs.Responses;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -19,7 +19,6 @@ public class AuthManagementController : ControllerBase
 {
     private readonly UserManager<IdentityUser> _userManager;
     private readonly JwtConfig _jwtConfig;
-
     public AuthManagementController(UserManager<IdentityUser> userManager, IOptionsMonitor<JwtConfig> optionsMonitor)
     {
         _userManager = userManager;
@@ -52,7 +51,7 @@ public class AuthManagementController : ControllerBase
             if (isCreated.Succeeded)
             {
                 var jwtToken = GenerateJwtToken(newUser);
-
+                await _userManager.AddToRoleAsync(newUser,"User");
                 return Ok(new RegistrationResponses()
                 {
                     Success = true,
