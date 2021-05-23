@@ -3,30 +3,35 @@
 }
 
 <div class="topic">
-    <h3>Lab List</h3>
+    <h3>Dino Lab List</h3>
 </div>
 <div class="tab">
     <div class="tablist">
-        <button class="tablist-item tab-active">
+        <button id="hw" class="tablist-item" onclick="openCity(event, 'hw')">
             <h5>HW Lab</h5>
         </button>
-        <button class="tablist-item">
+        <button id="nw" class="tablist-item" onclick="openCity(event, 'nw')">
             <h5>NW Lab</h5>
         </button>
-        <button class="tablist-item">
+        <button id="saig" class="tablist-item" onclick="openCity(event, 'saig')">
             <h5>SAIG Lab</h5>
         </button>
-        <button class="tablist-item">
+        <button id="hcl" class="tablist-item" onclick="openCity(event, 'hcl')">
             <h5>HCL Lab</h5>
         </button>
-        <button class="tablist-item">
+        <button id="esl" class="tablist-item" onclick="openCity(event, 'esl')">
             <h5>ESL Lab</h5>
         </button>
+        <a href="~/SlothLab">
+            <button class="tablist-item">
+                <h5>Sloth Flying Lab</h5>
+            </button>
+        </a>
     </div>
 </div>
 
 <div class="item-info">
-    <div class="item-image"></div>
+    <div class="item-image" style="background-image: url(../Dino_item.png);"></div>
     <div class="item-detail">
         <form>
             @{
@@ -96,3 +101,22 @@
     </table>
 
 </div>
+
+<script>
+
+    function openCity(evt, lab) {
+        var tabItem = document.getElementsByClassName("tablist-item");
+        //var tabContent = document.getElementsByClassName("tabcontent");
+        //for (i = 0; i < tabContent.length; i++) {
+        //    tabContent[i].style.display = "none";
+        //}
+        for (i = 0; i < tabItem.length; i++) {
+            tabItem[i].className = tabItem[i].className.replace(" tab-active", "");
+        }
+        //document.getElementById(lab).style.display = "block";
+        evt.currentTarget.className += " tab-active";
+    }
+
+    document.getElementById("hw").click();
+
+</script>

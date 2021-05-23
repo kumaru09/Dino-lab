@@ -1,0 +1,366 @@
+@{
+    ViewData["Title"] = "SlothLab Page";
+}
+
+<div class="topic">
+    <h3>Sloth Flying Lab List</h3>
+</div>
+<div class="tab">
+    <div class="tablist">
+        <button id="l1" class="tablist-item" onclick="openCity(event, 'lab1')">
+            <h5>Lab 1</h5>
+        </button>
+        <button id="l2" class="tablist-item" onclick="openCity(event, 'lab2')">
+            <h5>Lab 2</h5>
+        </button>
+        <button id="l3" class="tablist-item" onclick="openCity(event, 'lab3')">
+            <h5>Lab 3</h5>
+        </button>
+        <button id="l4" class="tablist-item" onclick="openCity(event, 'lab4')">
+            <h5>Lab 4</h5>
+        </button>
+        <button id="l5" class="tablist-item" onclick="openCity(event, 'lab5')">
+            <h5>Lab 5</h5>
+        </button>
+        <a href="~/Book" style="width: 100%;" >
+            <button class="tablist-item">
+                <h5>Dino Lab</h5>
+            </button>
+        </a>
+    </div>
+</div>
+
+
+<div id="lab1" class="tabcontent">
+    <div class="item-info" style="flex-direction: column; align-items: center;">
+        @{
+            string tail1 = Convert.ToString(ViewBag.Lab1.GetProperty("imageUrl"));
+            string src1 = ViewBag.rootapi + tail1;
+            <div class="item-image" style="background-image: url(@src1); height: 200px;"> </div>
+        }
+        <div>
+            <h5>อุปกรณ์ : @(ViewBag.Lab1.GetProperty("itemName")) </h5>
+        </div>
+    </div>
+
+    <div tabindex="0">
+        <table>
+            <thead>
+                <tr>
+                    <th><br>Date<br><br></th>
+                    @for (int r = 0; r < 9; r++)
+                    {
+                        <th>@($"{(r+8).ToString("D2")}.00 - {(r+9).ToString("D2")}.00")</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    DateTime startDate1 = ViewBag.startDate;
+                    for (int c = 0; c < 14; c++)
+                    {
+                        DateTime date1 = startDate1.AddDays(c);
+                        <tr>
+                            @for (int r = 0; r <= 9; r++)
+                            {
+                                @if (r == 0)
+                                {
+                                    <td class="th">
+                                        @date1.ToString("ddd")<br>
+                                        @date1.ToString("dd")<br>
+                                        @date1.ToString("MMM")
+                                    </td>
+                                }
+                                else
+                                {
+                                    var bookSlotTable1 = ViewBag.Lab1.GetProperty("bookSlotTable");
+                                    var row1 = r - 1;
+                                    string chk1 = Convert.ToString(@bookSlotTable1[c][row1]);
+                                    if (chk1 == "0")
+                                    {
+                                        <td class="td-disable">@bookSlotTable1[c][row1]</td>
+                                    }
+                                    else
+                                    {
+                                        <td>@bookSlotTable1[c][row1]</td>
+                                    }
+                                }
+                            }
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="lab2" class="tabcontent">
+    <div class="item-info" style="flex-direction: column; align-items: center;">
+        @{
+            string tail2 = Convert.ToString(ViewBag.Lab2.GetProperty("imageUrl"));
+            string src2 = ViewBag.rootapi + tail2;
+            <div class="item-image" style="background-image: url(@src2); height: 200px;"> </div>
+        }
+        <div>
+            <h5>อุปกรณ์ : @(ViewBag.Lab2.GetProperty("itemName")) </h5>
+        </div>
+    </div>
+
+    <div tabindex="0">
+        <table>
+            <thead>
+                <tr>
+                    <th><br>Date<br><br></th>
+                    @for (int r = 0; r < 9; r++)
+                    {
+                        <th>@($"{(r+8).ToString("D2")}.00 - {(r+9).ToString("D2")}.00")</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    DateTime startDate2 = ViewBag.startDate;
+                    for (int c = 0; c < 14; c++)
+                    {
+                        DateTime date2 = startDate2.AddDays(c);
+                        <tr>
+                            @for (int r = 0; r <= 9; r++)
+                            {
+                                @if (r == 0)
+                                {
+                                    <td class="th">
+                                        @date2.ToString("ddd")<br>
+                                        @date2.ToString("dd")<br>
+                                        @date2.ToString("MMM")
+                                    </td>
+                                }
+                                else
+                                {
+                                    var bookSlotTable2 = ViewBag.Lab2.GetProperty("bookSlotTable");
+                                    var row2 = r - 1;
+                                    string chk2 = Convert.ToString(@bookSlotTable2[c][row2]);
+                                    if (chk2 == "0")
+                                    {
+                                        <td class="td-disable">@bookSlotTable2[c][row2]</td>
+                                    }
+                                    else
+                                    {
+                                        <td>@bookSlotTable2[c][row2]</td>
+                                    }
+                                }
+                            }
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="lab3" class="tabcontent">
+    <div class="item-info" style="flex-direction: column; align-items: center;">
+        @{
+            string tail3 = Convert.ToString(ViewBag.Lab3.GetProperty("imageUrl"));
+            string src3 = ViewBag.rootapi + tail3;
+            <div class="item-image" style="background-image: url(@src3); height: 200px;"> </div>
+        }
+        <div>
+            <h5>อุปกรณ์ : @(ViewBag.Lab3.GetProperty("itemName")) </h5>
+        </div>
+    </div>
+
+    <div tabindex="0">
+        <table>
+            <thead>
+                <tr>
+                    <th><br>Date<br><br></th>
+                    @for (int r = 0; r < 9; r++)
+                    {
+                        <th>@($"{(r+8).ToString("D2")}.00 - {(r+9).ToString("D2")}.00")</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    DateTime startDate3 = ViewBag.startDate;
+                    for (int c = 0; c < 14; c++)
+                    {
+                        DateTime date3 = startDate3.AddDays(c);
+                        <tr>
+                            @for (int r = 0; r <= 9; r++)
+                            {
+                                @if (r == 0)
+                                {
+                                    <td class="th">
+                                        @date3.ToString("ddd")<br>
+                                        @date3.ToString("dd")<br>
+                                        @date3.ToString("MMM")
+                                    </td>
+                                }
+                                else
+                                {
+                                    var bookSlotTable3 = ViewBag.Lab3.GetProperty("bookSlotTable");
+                                    var row3 = r - 1;
+                                    string chk3 = Convert.ToString(@bookSlotTable3[c][row3]);
+                                    if (chk3 == "0")
+                                    {
+                                        <td class="td-disable">@bookSlotTable3[c][row3]</td>
+                                    }
+                                    else
+                                    {
+                                        <td>@bookSlotTable3[c][row3]</td>
+                                    }
+                                }
+                            }
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="lab4" class="tabcontent">
+    <div class="item-info" style="flex-direction: column; align-items: center;">
+        @{
+            string tail4 = Convert.ToString(ViewBag.Lab4.GetProperty("imageUrl"));
+            string src4 = ViewBag.rootapi + tail4;
+            <div class="item-image" style="background-image: url(@src4); height: 200px;"> </div>
+        }
+        <div>
+            <h5>อุปกรณ์ : @(ViewBag.Lab4.GetProperty("itemName")) </h5>
+        </div>
+    </div>
+
+    <div tabindex="0">
+        <table>
+            <thead>
+                <tr>
+                    <th><br>Date<br><br></th>
+                    @for (int r = 0; r < 9; r++)
+                    {
+                        <th>@($"{(r+8).ToString("D2")}.00 - {(r+9).ToString("D2")}.00")</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    DateTime startDate4 = ViewBag.startDate;
+                    for (int c = 0; c < 14; c++)
+                    {
+                        DateTime date4 = startDate4.AddDays(c);
+                        <tr>
+                            @for (int r = 0; r <= 9; r++)
+                            {
+                                @if (r == 0)
+                                {
+                                    <td class="th">
+                                        @date4.ToString("ddd")<br>
+                                        @date4.ToString("dd")<br>
+                                        @date4.ToString("MMM")
+                                    </td>
+                                }
+                                else
+                                {
+                                    var bookSlotTable4 = ViewBag.Lab4.GetProperty("bookSlotTable");
+                                    var row4 = r - 1;
+                                    string chk4 = Convert.ToString(@bookSlotTable4[c][row4]);
+                                    if (chk4 == "0")
+                                    {
+                                        <td class="td-disable">@bookSlotTable4[c][row4]</td>
+                                    }
+                                    else
+                                    {
+                                        <td>@bookSlotTable4[c][row4]</td>
+                                    }
+                                }
+                            }
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="lab5" class="tabcontent">
+    <div class="item-info" style="flex-direction: column; align-items: center;">
+        @{
+            string tail5 = Convert.ToString(ViewBag.Lab5.GetProperty("imageUrl"));
+            string src5 = ViewBag.rootapi + tail5;
+            <div class="item-image" style="background-image: url(@src5); height: 200px;"> </div>
+        }
+        <div>
+            <h5>อุปกรณ์ : @(ViewBag.Lab5.GetProperty("itemName")) </h5>
+        </div>
+    </div>
+
+    <div tabindex="0">
+        <table>
+            <thead>
+                <tr>
+                    <th><br>Date<br><br></th>
+                    @for (int r = 0; r < 9; r++)
+                    {
+                        <th>@($"{(r+8).ToString("D2")}.00 - {(r+9).ToString("D2")}.00")</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    DateTime startDate5 = ViewBag.startDate;
+                    for (int c = 0; c < 14; c++)
+                    {
+                        DateTime date5 = startDate5.AddDays(c);
+                        <tr>
+                            @for (int r = 0; r <= 9; r++)
+                            {
+                                @if (r == 0)
+                                {
+                                    <td class="th">
+                                        @date5.ToString("ddd")<br>
+                                        @date5.ToString("dd")<br>
+                                        @date5.ToString("MMM")
+                                    </td>
+                                }
+                                else
+                                {
+                                    var bookSlotTable5 = ViewBag.Lab5.GetProperty("bookSlotTable");
+                                    var row5 = r - 1;
+                                    string chk5 = Convert.ToString(@bookSlotTable5[c][row5]);
+                                    if (chk5 == "0")
+                                    {
+                                        <td class="td-disable">@bookSlotTable5[c][row5]</td>
+                                    }
+                                    else
+                                    {
+                                        <td>@bookSlotTable5[c][row5]</td>
+                                    }
+                                }
+                            }
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+
+    function openCity(evt, lab) {
+        var tabItem = document.getElementsByClassName("tablist-item");
+        var tabContent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabContent.length; i++) {
+            tabContent[i].style.display = "none";
+        }
+        for (i = 0; i < tabItem.length; i++) {
+            tabItem[i].className = tabItem[i].className.replace(" tab-active", "");
+        }
+        document.getElementById(lab).style.display = "block";
+        evt.currentTarget.className += " tab-active";
+    }
+
+    document.getElementById("l1").click();
+
+</script>
