@@ -33,15 +33,26 @@ public class AuthManagementController : ControllerBase
         if (ModelState.IsValid)
         {
             // check i the user with the same email exist
-            var existingUser = await _userManager.FindByEmailAsync(user.Email);
+            var existingEmail = await _userManager.FindByEmailAsync(user.Email);
+            var existingUser = await _userManager.FindByNameAsync(user.Username);
 
-            if (existingUser != null)
+            if (existingEmail != null)
             {
                 return BadRequest(new RegistrationResponses()
                 {
                     Success = false,
                     Errors = new List<string>(){
                                             "Email already exist"
+                                        }
+                });
+            }
+            if(existingUser != null)
+            {
+                return BadRequest(new RegistrationResponses()
+                {
+                    Success = false,
+                    Errors = new List<string>(){
+                                            "UserName already exist"
                                         }
                 });
             }
