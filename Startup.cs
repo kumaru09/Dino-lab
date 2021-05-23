@@ -15,7 +15,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.EntityFrameworkCore;
 
-namespace dinolab
+namespace Dinolab
 {
     public class Startup
     {

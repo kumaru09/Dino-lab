@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace dinolab.Migrations
+namespace Dinolab.Migrations
 {
     public partial class Authentication : Migration
     {

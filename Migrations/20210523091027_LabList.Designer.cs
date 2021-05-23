@@ -9,14 +9,65 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Dinolab.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
-    [Migration("20210517075352_Authentication")]
-    partial class Authentication
+    [Migration("20210523091027_LabList")]
+    partial class LabList
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "5.0.6");
+
+            modelBuilder.Entity("Dinolab.BookingList", b =>
+                {
+                    b.Property<string>("BookId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Date")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("EqId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Time")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("BookId");
+
+                    b.ToTable("BookingList");
+                });
+
+            modelBuilder.Entity("Dinolab.LabList", b =>
+                {
+                    b.Property<string>("LabId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("LabName")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("LabId");
+
+                    b.ToTable("LabList");
+                });
+
+            modelBuilder.Entity("Dinolab.Role", b =>
+                {
+                    b.Property<string>("RoleId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("RoleName")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("RoleId");
+
+                    b.ToTable("Role");
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
