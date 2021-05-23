@@ -46,12 +46,12 @@ public class AuthManagementController : ControllerBase
                 });
             }
 
-            var newUser = new IdentityUser() { Email = user.Email, UserName = user.Username};
+            var newUser = new IdentityUser() { Email = user.Email, UserName = user.Username };
             var isCreated = await _userManager.CreateAsync(newUser, user.Password);
             if (isCreated.Succeeded)
             {
+                await _userManager.AddToRoleAsync(newUser, "User");
                 var jwtToken = GenerateJwtToken(newUser);
-                await _userManager.AddToRoleAsync(newUser,"User");
                 return Ok(new RegistrationResponses()
                 {
                     Success = true,
@@ -140,6 +140,8 @@ public class AuthManagementController : ControllerBase
 
         // We get our secret from the appsettings
         var key = Encoding.ASCII.GetBytes(_jwtConfig.Secret);
+        var userRole = _userManager.GetRolesAsync(user);
+
 
         // we define our token descriptor
         // We need to utilise claims which are properties in our token which gives information about the token
@@ -151,7 +153,7 @@ public class AuthManagementController : ControllerBase
             Subject = new ClaimsIdentity(new[]
             {
                 new Claim("Id", user.Id),
-                new Claim(JwtRegisteredClaimNames.Sub, user.Email),
+                new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
                 new Claim(JwtRegisteredClaimNames.Email, user.Email),
                 // the JTI is used for our refresh token which we will be convering in the next video
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
@@ -162,6 +164,11 @@ public class AuthManagementController : ControllerBase
             // here we are adding the encryption alogorithim information which will be used to decrypt our token
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha512Signature)
         };
+        foreach (var role in userRole.Result)
+        {
+            var claim = new Claim(ClaimTypes.Role, role);
+            tokenDescriptor.Subject.AddClaim(claim);
+        }
 
         var token = jwtTokenHandler.CreateToken(tokenDescriptor);
 

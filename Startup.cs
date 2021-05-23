@@ -60,6 +60,7 @@ namespace dinolab
                 };
             });
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApiDbContext>();
         }
 
