@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@model Dinolab.Models.DTOs.Requests.UserRegistrationRequestDTO
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -11,56 +13,71 @@
     <header>
         <nav class="navbar">
             <div class="container">
-                <a href="#"><div class="navbar-brand"></div></a>
-                <ul class="navbar-nav">
+                <a href="/home"><div class="navbar-brand"></div></a>
+                <ul class="navbar-nav" id="menu">
                     <li>
                         <a href="#" class="nav-link" id="loginBtn">Login</a>
                     </li>
                     <li>
                         <button class="button button-primary" id="regBtn">Register</button>
                     </li>
-                    
                 </ul>
+                <div style="display: none;" id="userMenu"></div>
             </div>
         </nav>
         <div id="loginModal" class="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
+            <div class="modal-content" id="loginForm">
+                <span class="close" onclick="ModalClose()">&times;</span>
                 <h2 style="margin-top: 2rem; margin-bottom: 2rem">Login</h2>
-                <form>
-                    <div class="input-container">
-                        <input type="email" class="input-field" placeholder="email">
-                        <span class="material-icons">email</span>
-                    </div>
-                    <div class="input-container">
-                        <input type="password" class="input-field" placeholder="password">
-                        <span class="material-icons">vpn_key</span>
-                    </div>
-                    <button style="padding: 15px 40px 15px 40px; margin-bottom: 2rem" class="button button-primary">OK</button>
-                </form>
-                <p>You didn't have an account? <a href="#" id="regLink">click here to Register</a></p>
+                <div>
+                <div class="input-container">
+                    <input type="email" class="input-field" placeholder="email" id="LoginEmail">
+                    <span class="material-icons">email</span>
+                    <div class="invalid" id="errEmail"></div>
+                </div>
+                <div class="input-container">
+                    <input type="password" class="input-field" placeholder="password" id="LoginPassword">
+                    <span class="material-icons">vpn_key</span>
+                    <div class="invalid" id="errPassword"></div>
+                </div>
+                <div class="invalid" id="err"></div>
+                <button onclick="Login()" style="padding: 15px 40px 15px 40px; margin-bottom: 2rem; margin-top: 2rem" class="button button-primary">OK</button>
+                </div>
+                <span>You didn't have an account? <a href="#" id="regLink">click here to Register</a></span>
+            </div>
+            <div class="modal-content-res" id="loginRes">
+                <h4>Successful Login</h4>
+                <button class="button button-primary" style="padding: 15px 40px 15px 45px; margin-top: 2rem">OK</button>
             </div>
         </div>
         <div id="regModal" class="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
+            <div class="modal-content" id="formContent">
+                <span class="close" onclick="ModalClose()">&times;</span>
                 <h2 style="margin-top: 2rem; margin-bottom: 2rem">Register</h2>
-                <form>
+                <div>
                     <div class="input-container">
-                        <input type="text" class="input-field" placeholder="name">
+                        <input type="text" class="input-field" placeholder="name" name="Username" id="RegUsername" />
                         <span class="material-icons">people</span>
+                        <div class="invalid" id="errUsername"></div>
                     </div>
                     <div class="input-container">
-                        <input type="email" class="input-field" placeholder="email">
+                        <input type="email" class="input-field" placeholder="email" name="Email" id="RegEmail" />
                         <span class="material-icons">email</span>
+                        <div class="invalid" id="errEmailReg"></div>
                     </div>
                     <div class="input-container">
-                        <input type="password" class="input-field" placeholder="password">
+                        <input type="password" class="input-field" placeholder="password" name="Password" id="RegPassword" />
                         <span class="material-icons">vpn_key</span>
+                        <div class="invalid" id="errPasswordReg"></div>
                     </div>
-                    <button style="padding: 15px 40px 15px 40px; margin-bottom: 2rem" class="button button-primary">OK</button>
-                </form>
-                <p>You already have an account <a href="#" id="loginLink">click here to Login</a></p>
+                    <div class="invalid" id="errReg"></div>
+                    <button onclick="register()" style="padding: 15px 40px 15px 40px; margin-bottom: 2rem; margin-top: 2rem" class="button button-primary" />Register</button>
+                </div>
+                <span>You already have an account <a href="#" id="loginLink">click here to Login</a></span>
+            </div>
+            <div class="modal-content-res" id="formRes">
+                <h4>Successful Registration</h4>
+                <button class="button button-primary" style="padding: 15px 40px 15px 45px; margin-top: 2rem">OK</button>
             </div>
         </div>
     </header>

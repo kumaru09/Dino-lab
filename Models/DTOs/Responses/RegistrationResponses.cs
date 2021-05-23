@@ -1,4 +1,4 @@
-namespace dinolab.Models.DTOs.Responses
+namespace Dinolab.Models.DTOs.Responses
 {
     public class RegistrationResponses : AuthResult
     {

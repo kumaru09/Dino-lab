@@ -1,4 +1,4 @@
-namespace dinolab
+namespace Dinolab
 {
     public class JwtConfig
     {

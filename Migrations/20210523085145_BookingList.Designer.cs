@@ -9,14 +9,39 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Dinolab.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
-    [Migration("20210517075352_Authentication")]
-    partial class Authentication
+    [Migration("20210523085145_BookingList")]
+    partial class BookingList
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "5.0.6");
+
+            modelBuilder.Entity("Dinolab.BookingList", b =>
+                {
+                    b.Property<string>("BookId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Date")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("EqId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Time")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("BookId");
+
+                    b.ToTable("BookingList");
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {

@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace dinolab.Models.DTOs.Requests
+namespace Dinolab.Models.DTOs.Requests
 {
     public class UserLoginRequest
     {

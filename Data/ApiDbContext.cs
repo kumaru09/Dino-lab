@@ -13,5 +13,7 @@ namespace Dinolab
         }
 
         public DbSet<ItemList> ItemList {get; set;}
+        public DbSet<BookingList> BookingList { get; set; }
+        public DbSet<LabList> LabList { get; set; }
     }
 }

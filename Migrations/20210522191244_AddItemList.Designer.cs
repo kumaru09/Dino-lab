@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace dinolab.Migrations
+namespace Dinolab.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
     [Migration("20210522191244_AddItemList")]
