@@ -143,7 +143,7 @@ var inputHr = document.getElementById("inputHr");
 function updateMinTime() {
   var today = new Date();
   var inputDay = document.getElementById("inputDay");
-  if (inputDay == today.toISOString().slice(0, 10)) {
+  if (inputDay.value == today.toISOString().slice(0, 10)) {
     inputTime.min = today.toTimeString().slice(0, 3) + "00";
     if (inputTime.value < inputTime.min) {
       inputTime.value = inputTime.min;
