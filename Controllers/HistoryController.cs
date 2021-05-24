@@ -33,11 +33,11 @@ namespace Dinolab.Controllers
 
                 Console.WriteLine(userId);
 
-                DateTime startDate = DateTime.UtcNow.AddHours(7).Date;
+                DateTime startDate = DateTime.UtcNow.AddHours(7);
                 DateTime hr16 = new DateTime(2021, 1, 1, 16, 00, 00);
                 int chkmaxhr = TimeSpan.Compare(startDate.TimeOfDay, hr16.TimeOfDay);
                 if (chkmaxhr == 1) startDate = startDate.AddDays(1);
-                DateTime endDate = startDate.AddDays(14).Date;
+                DateTime endDate = startDate.AddDays(14);
 
                 IEnumerable<BookingList> booked = _db.BookingList.Where(BookingList => (BookingList.UserId == userId) && (BookingList.Date < endDate)
                 && (startDate <= BookingList.Date));
@@ -48,13 +48,16 @@ namespace Dinolab.Controllers
                 foreach (BookingList book in booked) {
                     res[i,0] = book.EqId.ToString();
                     res[i,1] = book.Date.ToString("MM/dd/yyyy hh:mm tt");
-                    res[i,2] = book.Date.AddHours(book.Time).ToString("MM/dd/yyyy hh:mm tt");
+                    res[i,2] = book.Date.AddHours(book.Time).ToString("hh:mm tt");
                     Console.WriteLine(res[i,0]+" "+res[i,1]+" "+res[i,2]);
                     i++;
                 }
                 ViewBag.res = res;
+                
+                return View();
             }
-            return View();
+            return Redirect("Home");
+            
         }
 
         public IActionResult Privacy()
