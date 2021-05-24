@@ -103,13 +103,15 @@ namespace Dinolab.Controllers
         public async Task<IActionResult> getBlackList()
         {
             var blackListUser = await _userManager.GetUsersInRoleAsync("Blacklist");
-            List<string> userList = new List<string>();
+            string[,] userData = new string[blackListUser.Count,blackListUser.Count];
+            var i = 0;
             foreach (var user in blackListUser)
             {
-                userList.Add(user.UserName);
-            }
-            string[] list = userList.ToArray();
-            ViewBag.blackListData = list;
+                userData[i,0] = user.UserName;
+                userData[0,i] = user.Id;
+                i++;
+            } 
+            ViewBag.blackListData = userData;
             return RedirectToAction("Index");
         }
 
