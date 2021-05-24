@@ -4,8 +4,9 @@ namespace Dinolab
 {
     public class LabList
     {
-        [Key] 
-        public string LabId { get; set; }
+        [Key]
+        [Required]
+        public int LabId { get; set; }
         public string LabName { get; set; }
     }
 }
