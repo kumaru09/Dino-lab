@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace dinolab.Migrations
+namespace Dinolab.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
     partial class ApiDbContextModelSnapshot : ModelSnapshot
@@ -15,6 +15,26 @@ namespace dinolab.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "5.0.6");
+
+            modelBuilder.Entity("Dinolab.Data.ItemList", b =>
+                {
+                    b.Property<int>("itemId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("LabId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("itemName")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("itemId");
+
+                    b.ToTable("ItemList");
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {

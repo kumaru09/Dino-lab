@@ -5,9 +5,9 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using dinolab;
-using dinolab.Models.DTOs.Requests;
-using dinolab.Models.DTOs.Responses;
+using Dinolab;
+using Dinolab.Models.DTOs.Requests;
+using Dinolab.Models.DTOs.Responses;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -19,7 +19,6 @@ public class AuthManagementController : ControllerBase
 {
     private readonly UserManager<IdentityUser> _userManager;
     private readonly JwtConfig _jwtConfig;
-
     public AuthManagementController(UserManager<IdentityUser> userManager, IOptionsMonitor<JwtConfig> optionsMonitor)
     {
         _userManager = userManager;
@@ -34,9 +33,10 @@ public class AuthManagementController : ControllerBase
         if (ModelState.IsValid)
         {
             // check i the user with the same email exist
-            var existingUser = await _userManager.FindByEmailAsync(user.Email);
+            var existingEmail = await _userManager.FindByEmailAsync(user.Email);
+            var existingUser = await _userManager.FindByNameAsync(user.Username);
 
-            if (existingUser != null)
+            if (existingEmail != null)
             {
                 return BadRequest(new RegistrationResponses()
                 {
@@ -46,13 +46,23 @@ public class AuthManagementController : ControllerBase
                                         }
                 });
             }
+            if(existingUser != null)
+            {
+                return BadRequest(new RegistrationResponses()
+                {
+                    Success = false,
+                    Errors = new List<string>(){
+                                            "UserName already exist"
+                                        }
+                });
+            }
 
-            var newUser = new IdentityUser() { Email = user.Email, UserName = user.Username};
+            var newUser = new IdentityUser() { Email = user.Email, UserName = user.Username };
             var isCreated = await _userManager.CreateAsync(newUser, user.Password);
             if (isCreated.Succeeded)
             {
+                await _userManager.AddToRoleAsync(newUser, "User");
                 var jwtToken = GenerateJwtToken(newUser);
-
                 return Ok(new RegistrationResponses()
                 {
                     Success = true,
@@ -141,6 +151,8 @@ public class AuthManagementController : ControllerBase
 
         // We get our secret from the appsettings
         var key = Encoding.ASCII.GetBytes(_jwtConfig.Secret);
+        var userRole = _userManager.GetRolesAsync(user);
+
 
         // we define our token descriptor
         // We need to utilise claims which are properties in our token which gives information about the token
@@ -152,7 +164,7 @@ public class AuthManagementController : ControllerBase
             Subject = new ClaimsIdentity(new[]
             {
                 new Claim("Id", user.Id),
-                new Claim(JwtRegisteredClaimNames.Sub, user.Email),
+                new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
                 new Claim(JwtRegisteredClaimNames.Email, user.Email),
                 // the JTI is used for our refresh token which we will be convering in the next video
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
@@ -163,6 +175,11 @@ public class AuthManagementController : ControllerBase
             // here we are adding the encryption alogorithim information which will be used to decrypt our token
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha512Signature)
         };
+        foreach (var role in userRole.Result)
+        {
+            var claim = new Claim(ClaimTypes.Role, role);
+            tokenDescriptor.Subject.AddClaim(claim);
+        }
 
         var token = jwtTokenHandler.CreateToken(tokenDescriptor);
 

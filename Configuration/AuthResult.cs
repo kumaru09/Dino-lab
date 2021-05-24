@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace dinolab
+namespace Dinolab
 {
     public class AuthResult
     {

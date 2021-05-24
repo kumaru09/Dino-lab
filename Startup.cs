@@ -15,7 +15,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.EntityFrameworkCore;
 
-namespace dinolab
+namespace Dinolab
 {
     public class Startup
     {
@@ -60,6 +60,7 @@ namespace dinolab
                 };
             });
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApiDbContext>();
         }
 
