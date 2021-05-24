@@ -76,6 +76,10 @@ namespace Dinolab.Controllers
             }
             ViewBag.Booktable = BookTable;
 
+            string[] itemName = {"Arduino","Hantek","3D printer","FPGA","Raspberry pi"};
+            ViewBag.itemName = itemName[id-1]; 
+            ViewBag.id = id;
+
             return View("Index");
         }
 

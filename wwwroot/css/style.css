@@ -302,11 +302,6 @@ input[type="text"] {
   color: #ff444d;
 }
 
-.lablist {
-  overflow: auto;
-  white-space: nowrap;
-}
-
 .invalid {
   width: 100%;
   margin-top: 0.25rem;
@@ -325,12 +320,13 @@ input[type="text"] {
   width: 1200px;
 }
 
-.lablist-list > div {
+.lablist-list div {
   width: 200px;
   height: 200px;
   background-color: #1f2833;
   color: white;
   margin-right: 0.5rem;
+  margin-bottom: 1rem;
   text-align: center;
   padding-top: 20px;
   font-family: DinoStyle;

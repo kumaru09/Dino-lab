@@ -7,22 +7,22 @@
 </div>
 <div class="tab">
     <div class="tablist">
-        <a href="~/slothlab?labNum=1" id="lab1" class="tablist-item">
+        <a href="/slothlab?labNum=1" id="slothlab1" class="tablist-item">
             <h5>Lab 1</h5>
         </a>
-        <a href="~/slothlab?labNum=2" id="lab2" class="tablist-item">
+        <a href="/slothlab?labNum=2" id="slothlab2" class="tablist-item">
             <h5>Lab 2</h5>
         </a>
-        <a href="~/slothlab?labNum=3" id="lab3" class="tablist-item">
+        <a href="/slothlab?labNum=3" id="slothlab3" class="tablist-item">
             <h5>Lab 3</h5>
         </a>
-        <a href="~/slothlab?labNum=4" id="lab4" class="tablist-item">
+        <a href="/slothlab?labNum=4" id="slothlab4" class="tablist-item">
             <h5>Lab 4</h5>
         </a>
-        <a href="~/slothlab?labNum=5" id="lab5" class="tablist-item">
+        <a href="/slothlab?labNum=5" id="slothlab5" class="tablist-item">
             <h5>Lab 5</h5>
         </a>
-        <a href="~/book" class="tablist-item">
+        <a href="/book/lab/1" class="tablist-item">
             <h5>Dino Lab</h5>
         </a>
     </div>
@@ -93,5 +93,5 @@
 </div>
 
 <script>
-    document.getElementById("lab"+@(Convert.ToString(ViewBag.labNum))).className += " tab-active";
+    document.getElementById("slothlab"+@(Convert.ToString(ViewBag.labNum))).className += " tab-active";
 </script>

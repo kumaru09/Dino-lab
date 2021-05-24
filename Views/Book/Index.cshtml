@@ -7,25 +7,23 @@
 </div>
 <div class="tab">
     <div class="tablist">
-        <button id="hw" class="tablist-item" onclick="openCity(event, 'hw')">
+        <a href="/book/lab/1" id="lab1" class="tablist-item">
             <h5>HW Lab</h5>
-        </button>
-        <button id="nw" class="tablist-item" onclick="openCity(event, 'nw')">
+        </a>
+        <a href="/book/lab/2" id="lab2" class="tablist-item">
             <h5>NW Lab</h5>
-        </button>
-        <button id="saig" class="tablist-item" onclick="openCity(event, 'saig')">
+        </a>
+        <a href="/book/lab/3" id="lab3" class="tablist-item">
             <h5>SAIG Lab</h5>
-        </button>
-        <button id="hcl" class="tablist-item" onclick="openCity(event, 'hcl')">
+        </a>
+        <a href="/book/lab/4" id="lab4" class="tablist-item">
             <h5>HCL Lab</h5>
-        </button>
-        <button id="esl" class="tablist-item" onclick="openCity(event, 'esl')">
+        </a>
+        <a href="/book/lab/5" id="lab5" class="tablist-item">
             <h5>ESL Lab</h5>
-        </button>
-        <a href="~/SlothLab?labNum=1">
-            <button class="tablist-item">
-                <h5>Sloth Flying Lab</h5>
-            </button>
+        </a>
+        <a href="/SlothLab?labNum=1" class="tablist-item">
+            <h5>Sloth Flying Lab</h5>
         </a>
     </div>
 </div>
@@ -38,13 +36,14 @@
                 DateTime inputDate = ViewBag.startDate;
                 string curTime = ViewBag.curTime;
                 string maxHr = ViewBag.maxHr;
-                <p>อุปกรณ์ : Arduino </p>
+                <p>อุปกรณ์ : @ViewBag.itemName </p>
                 <label for="inputNum">จำนวน : </label>
                 <input id="inputNum" type="number" min="1" max="10" value="1">
                 <br><br>
                 <label for="inputDay">วันที่ยืม : </label>
                 <input id="inputDay" type="date" min="@(inputDate.ToString("yyyy-MM-dd"))"
-                    max="@(inputDate.AddDays(13).ToString("yyyy-MM-dd"))" value="@(inputDate.ToString("yyyy-MM-dd"))" onchange="updateMinTime()">
+                    max="@(inputDate.AddDays(13).ToString("yyyy-MM-dd"))" value="@(inputDate.ToString("yyyy-MM-dd"))"
+                    onchange="updateMinTime()">
                 <br><br>
                 <label for="inputTime">เวลาที่ยืม : </label>
                 <input id="inputTime" type="time" min="@curTime" max="15:00" value="@curTime" readonly required>
@@ -96,20 +95,5 @@
 </div>
 
 <script>
-
-    function openCity(evt, lab) {
-        var tabItem = document.getElementsByClassName("tablist-item");
-        //var tabContent = document.getElementsByClassName("tabcontent");
-        //for (i = 0; i < tabContent.length; i++) {
-        //    tabContent[i].style.display = "none";
-        //}
-        for (i = 0; i < tabItem.length; i++) {
-            tabItem[i].className = tabItem[i].className.replace(" tab-active", "");
-        }
-        //document.getElementById(lab).style.display = "block";
-        evt.currentTarget.className += " tab-active";
-    }
-
-    document.getElementById("hw").click();
-
+    document.getElementById("lab"+@(Convert.ToString(ViewBag.id))).className += " tab-active";
 </script>
