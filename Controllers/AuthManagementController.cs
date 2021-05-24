@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Dinolab;
 using Dinolab.Models.DTOs.Requests;
 using Dinolab.Models.DTOs.Responses;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -116,7 +117,8 @@ public class AuthManagementController : ControllerBase
             {
                 var jwtToken = GenerateJwtToken(existingUser);
                 var email = user.Email;
-
+                HttpContext.Session.SetString("Token", jwtToken);
+                
                 return Ok(new RegistrationResponses()
                 {
                     Success = true,

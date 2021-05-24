@@ -22,7 +22,22 @@
                         <button class="button button-primary" id="regBtn">Register</button>
                     </li>
                 </ul>
-                <div style="display: none;" id="userMenu"></div>
+                <div class="dropdown" id="userMenu">
+                    <span id="username"></span>
+                    <div class="dropdown-content">
+                        <a href="/Profile">Profile</a>
+                        <a href="/History">Booklist</a>
+                        <a onclick="Logout()">Logout</a>
+                    </div>
+                </div>
+                <div class="dropdown" id="adminMenu">
+                    <span id="adminname"></span>
+                    <div class="dropdown-content">
+                        <a href="/Admin">Lab</a>
+                        <a href="/Blacklist">Blacklist</a>
+                        <a onclick="Logout()">Logout</a>
+                    </div>
+                </div>
             </div>
         </nav>
         <div id="loginModal" class="modal">
@@ -47,7 +62,7 @@
             </div>
             <div class="modal-content-res" id="loginRes">
                 <h4>Successful Login</h4>
-                <button class="button button-primary" style="padding: 15px 40px 15px 45px; margin-top: 2rem">OK</button>
+                <button onclick="resClose()" class="button button-primary" style="padding: 15px 40px 15px 45px; margin-top: 2rem">OK</button>
             </div>
         </div>
         <div id="regModal" class="modal">
@@ -77,7 +92,7 @@
             </div>
             <div class="modal-content-res" id="formRes">
                 <h4>Successful Registration</h4>
-                <button class="button button-primary" style="padding: 15px 40px 15px 45px; margin-top: 2rem">OK</button>
+                <button onclick="resClose()" class="button button-primary" style="padding: 15px 40px 15px 45px; margin-top: 2rem">OK</button>
             </div>
         </div>
     </header>
