@@ -48,9 +48,9 @@ namespace Dinolab.Controllers
                 foreach (BookingList book in booked) {
                     res[i,0] = book.EqId.ToString();
                     res[i,1] = book.Date.ToString("MM/dd/yyyy hh:mm tt");
-                    res[i,2] = book.Date.AddHours(book.Time).ToString("MM/dd/yyyy hh:mm tt");
+                    res[i,2] = book.Date.AddHours(book.Time).ToString("hh:mm tt");
                     Console.WriteLine(res[i,0]+" "+res[i,1]+" "+res[i,2]);
-                    i++;
+                    i++; 
                 }
                 ViewBag.res = res;
             }

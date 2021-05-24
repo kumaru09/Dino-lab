@@ -6,50 +6,24 @@
     <h3>Currently Booked List</h3>
 </div>
 
-<div class="item-info">
-    <div class="item-image"></div>
-    <div class="item-detail">
-    <p>อุปกรณ์ : Arduino </p>
-    <div class="item-space">
-        <br><br>
-    </div>
-    <p>จำนวน : x</p>
-    <div class="item-space">
-        <br><br>
-    </div>
-    <p>เวลาที่ยืม : xx:xx - xx:xx</p>
-    </div>
-    <input id="returnItem" type="submit" value="คืนอุปกรณ์" style="align-self: flex-end;">
-</div>
-
-<div class="item-info">
-    <div class="item-image"></div>
-    <div class="item-detail">
-    <p>อุปกรณ์ : Arduino </p>
-    <div class="item-space">
-        <br><br>
-    </div>
-    <p>จำนวน : x</p>
-    <div class="item-space">
-        <br><br>
-    </div>
-    <p>เวลาที่ยืม : xx:xx - xx:xx</p>
-    </div>
-    <input id="returnItem" type="submit" value="คืนอุปกรณ์" style="align-self: flex-end;">
-</div>
-
-<div class="item-info">
-    <div class="item-image"></div>
-    <div class="item-detail">
-    <p>อุปกรณ์ : Arduino </p>
-    <div class="item-space">
-        <br><br>
-    </div>
-    <p>จำนวน : x</p>
-    <div class="item-space">
-        <br><br>
-    </div>
-    <p>เวลาที่ยืม : xx:xx - xx:xx</p>
-    </div>
-    <input id="returnItem" type="submit" value="คืนอุปกรณ์" style="align-self: flex-end;">
-</div>
+@if (ViewBag.res != null)
+{
+    for (int i = 0; i < ViewBag.res.Length / 3; i++)
+    {
+        <div class="item-info">
+            <div class="item-image"></div>
+            <div class="item-detail">
+                <p>อุปกรณ์ : @ViewBag.res[i,0]</p>
+                <div class="item-space">
+                    <br><br>
+                </div>
+                <p>วันที่ยืม : @ViewBag.res[i,1].Substring(0, 10)</p>
+                <div class="item-space">
+                    <br><br>
+                </div>
+                <p>เวลาที่ยืม : @ViewBag.res[i,1].Substring(11, 8) - @ViewBag.res[i,2]</p>
+            </div>
+            <input id="returnItem" type="submit" value="คืนอุปกรณ์" style="align-self: flex-end;">
+        </div>
+    }
+}
