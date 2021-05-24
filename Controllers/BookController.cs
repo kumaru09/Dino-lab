@@ -12,13 +12,15 @@ namespace Dinolab.Controllers
     public class BookController : Controller
     {
         private readonly ILogger<BookController> _logger;
+        private readonly ApiDbContext _db;
 
-        public BookController(ILogger<BookController> logger)
+        public BookController(ILogger<BookController> logger, ApiDbContext db)
         {
             _logger = logger;
+            _db = db;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Lab(int id)
         {
             DateTime startDate = DateTime.UtcNow.AddHours(7);
             DateTime hr9 = new DateTime(2021, 1, 1, 9, 00, 00);
@@ -42,7 +44,39 @@ namespace Dinolab.Controllers
             ViewBag.startDate = startDate;
             ViewBag.curTime = curTime;
             ViewBag.maxHr = maxHr;
-            return View();
+
+            LabList Lab = await _db.LabList.FindAsync(id);
+            
+            if (Lab == null) {
+                return NotFound();
+            }
+
+            ItemList item = await _db.ItemList.FindAsync(id);
+
+            DateTime _startDate = DateTime.UtcNow.AddHours(7).Date;
+            if (chkmaxhr == 1) _startDate = _startDate.AddDays(1);
+            DateTime endDate = _startDate.AddDays(14).Date;
+            
+            IEnumerable<BookingList> booked = _db.BookingList.Where(BookingList => (Lab.LabId == BookingList.EqId) && (BookingList.Date < endDate)
+            && (_startDate <= BookingList.Date));
+
+            int[,] BookTable = new int[14,7];
+            for (int i = 0; i < 14; i++) {
+                for (int j = 0; j < 7; j++) {
+                    int countBook = booked.Where(BookingList => _startDate.AddDays(i).Date == BookingList.Date && BookingList.Time == j + 1).Count();
+                    if (countBook == 0) {
+                        BookTable[i,j] = item.Amount;
+                    }
+                    else {
+                        if (item.Amount >= countBook) {
+                            BookTable [i,j] = item.Amount - countBook;
+                        }
+                    }
+                }
+            }
+            ViewBag.Booktable = BookTable;
+
+            return View("Index");
         }
 
         public IActionResult Privacy()

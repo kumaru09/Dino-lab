@@ -576,7 +576,6 @@ input[type="text"] {
 
 @media (max-width: 550px){
   .tablist {
-    display: block;
     width: 540px;
   }
   .tablist-item{

@@ -20,42 +20,30 @@ namespace Dinolab.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string labNum)
         {
             string rootapi = "https://slothflying.azurewebsites.net";
-            string[] lab =  new string[5];
-            for (int i = 0; i < 5; i++)
+            string lab = "";
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri(rootapi);
+            var rtask = client.GetAsync("/Api/GetBooking/" + labNum);
+            rtask.Wait();
+
+            var result = rtask.Result;
+            if (result.IsSuccessStatusCode)
             {
-                HttpClient client = new HttpClient();
-                client.BaseAddress = new Uri(rootapi);
-                var rtask = client.GetAsync("/Api/GetBooking/"+Convert.ToString(i+1));
-                rtask.Wait();
+                var rcontent = result.Content.ReadAsStringAsync();
+                rcontent.Wait();
 
-                var result = rtask.Result;
-                if (result.IsSuccessStatusCode)
-                {
-                    var rcontent = result.Content.ReadAsStringAsync();
-                    rcontent.Wait();
-
-                    lab[i] = rcontent.Result;
-                }
-                else
-                { //web api sent error response 
-                  //log response status here..
-                    ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
-                }
+                lab = rcontent.Result;
             }
-
             DateTime startDate = DateTime.UtcNow.AddHours(7);
 
             ViewBag.startDate = startDate;
             ViewBag.rootapi = rootapi;
-            ViewBag.lab1 = JsonDocument.Parse(lab[0]).RootElement;
-            ViewBag.lab2 = JsonDocument.Parse(lab[1]).RootElement;
-            ViewBag.lab3 = JsonDocument.Parse(lab[2]).RootElement;
-            ViewBag.lab4 = JsonDocument.Parse(lab[3]).RootElement;
-            ViewBag.lab5 = JsonDocument.Parse(lab[4]).RootElement;
-            
+            ViewBag.labNum = labNum;
+            ViewBag.lab = JsonDocument.Parse(lab).RootElement;
+
             return View();
         }
 

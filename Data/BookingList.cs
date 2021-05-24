@@ -1,4 +1,6 @@
+using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Dinolab
 {
@@ -7,9 +9,12 @@ namespace Dinolab
         [Key] 
         public string BookId { get; set; }
         public string UserId { get; set; }
-        public string EqId { get; set; }
-        public int Amount { get; set; }
-        public string Date { get; set; }
-        public string Time { get; set; }
+
+        [ForeignKey("ItemList")]
+        public int EqId { get; set; }
+
+        [DataType(DataType.Date)]
+        public DateTime Date { get; set; }
+        public int Time { get; set; }
     }
 }
