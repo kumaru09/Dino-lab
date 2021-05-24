@@ -7,10 +7,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Dinolab.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Dinolab.Controllers
 {
-    
+    [Authorize(Roles="Admin")]
     public class BlacklistController : Controller
     {
         private readonly UserManager<IdentityUser> _userManager;
@@ -45,7 +46,7 @@ namespace Dinolab.Controllers
                 {
                     foreach (var role in oldRole)
                     {
-                        if (role != "BlackList")
+                        if (role != "Blacklist")
                         {
                             var remove = await _userManager.RemoveFromRoleAsync(blackListUser, role);
                         }
@@ -55,7 +56,7 @@ namespace Dinolab.Controllers
                         }
 
                     }
-                    var presentRole = await _userManager.AddToRoleAsync(blackListUser, "BlackList");
+                    var presentRole = await _userManager.AddToRoleAsync(blackListUser, "Blacklist");
                     var newRole = _userManager.GetRolesAsync(user);
                     return RedirectToAction("Index");
                 }
@@ -101,7 +102,7 @@ namespace Dinolab.Controllers
         [HttpGet]
         public async Task<IActionResult> getBlackList()
         {
-            var blackListUser = await _userManager.GetUsersInRoleAsync("BlackList");
+            var blackListUser = await _userManager.GetUsersInRoleAsync("Blacklist");
             List<string> userList = new List<string>();
             foreach (var user in blackListUser)
             {

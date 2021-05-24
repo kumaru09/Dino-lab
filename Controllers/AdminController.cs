@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Dinolab.Controllers
 {
+    [Authorize(Roles="Admin")]
     public class AdminController : Controller
     {
         private readonly ILogger<AdminController> _logger;
@@ -28,7 +29,7 @@ namespace Dinolab.Controllers
             return View();
         }
 
-        [Route("Edit")]
+        [Route("EditItem")]
         [HttpPost]
         public IActionResult Edit([FromBody] ItemList ItemUpdating)
         {
