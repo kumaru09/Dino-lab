@@ -78,21 +78,14 @@
                 {
                     DateTime date = startDate.AddDays(c);
                     <tr>
-                        @for (int r = 0; r <= 7; r++)
+                        <td class="th">
+                            @date.ToString("ddd")<br>
+                            @date.ToString("dd")<br>
+                            @date.ToString("MMM")
+                        </td>
+                        @for (int r = 0; r < 7; r++)
                         {
-                            @if (r == 0)
-                            {
-                                <td class="th">
-                                    @date.ToString("ddd")<br>
-                                    @date.ToString("dd")<br>
-                                    @date.ToString("MMM")
-                                </td>
-                            }
-                            else
-                            {
-                                <td>@((r)+"-"+(c+1))</td>
-                            }
-
+                            <td>@ViewBag.BookTable[c,r]</td>
                         }
                     </tr>
                 }
