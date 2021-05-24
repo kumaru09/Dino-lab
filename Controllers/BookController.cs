@@ -20,7 +20,7 @@ namespace Dinolab.Controllers
             _db = db;
         }
 
-        public async Task<IActionResult> Lab(int id)
+        public async Task<IActionResult> index(int id)
         {
             DateTime startDate = DateTime.UtcNow.AddHours(7);
             DateTime hr9 = new DateTime(2021, 1, 1, 9, 00, 00);
@@ -57,20 +57,28 @@ namespace Dinolab.Controllers
             if (chkmaxhr == 1) _startDate = _startDate.AddDays(1);
             DateTime endDate = _startDate.AddDays(14).Date;
             
-            IEnumerable<BookingList> booked = _db.BookingList.Where(BookingList => (Lab.LabId == BookingList.EqId) && (BookingList.Date < endDate)
-            && (_startDate <= BookingList.Date));
+            IEnumerable<BookingList> booked = _db.BookingList.Where(BookingList => (Lab.LabId == BookingList.EqId) && (BookingList.Date.Date < endDate)
+            && (_startDate <= BookingList.Date.Date));
 
             int[,] BookTable = new int[14,7];
             for (int i = 0; i < 14; i++) {
                 for (int j = 0; j < 7; j++) {
-                    int countBook = booked.Where(BookingList => _startDate.AddDays(i).Date == BookingList.Date && BookingList.Time == j + 1).Count();
-                    if (countBook == 0) {
+                    IEnumerable<BookingList> countBook = booked.Where(BookingList => _startDate.AddDays(i).Date == BookingList.Date.Date && BookingList.Date.Hour == j + 9);
+                    if (BookTable[i,j] == 0 && countBook.Count() == 0) {
                         BookTable[i,j] = item.Amount;
                     }
-                    else {
-                        if (item.Amount >= countBook) {
-                            BookTable [i,j] = item.Amount - countBook;
+                    else if (countBook.Count() == 0 && BookTable[i,j] != 0) {
+                        BookTable[i,j] = item.Amount - BookTable[i,j];
+                    }
+                    else if (countBook.Count() != 0) {
+                        foreach (BookingList b in countBook) {
+                            int r = j;
+                            for (int c = b.Time; c > 0; c--) {
+                                BookTable[i,r]++;
+                                r++;
+                            }
                         }
+                        BookTable[i,j] = item.Amount - BookTable[i,j];
                     }
                 }
             }
@@ -80,7 +88,7 @@ namespace Dinolab.Controllers
             ViewBag.itemName = itemName[id-1]; 
             ViewBag.id = id;
 
-            return View("Index");
+            return View();
         }
 
         public IActionResult Privacy()
