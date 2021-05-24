@@ -7,7 +7,8 @@ namespace Dinolab.Data
         [Key]
         public int itemId { get; set; }
         public string itemName { get; set; }
-        public int Amount { get; set; }
-        public int LabId { get; set; }
+        public int amount { get; set; }
+        public int labId { get; set; }
+        public string imgItemSrc { get; set; }
     }
 }
