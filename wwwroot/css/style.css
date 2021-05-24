@@ -691,3 +691,7 @@ th, td {
 .dropdown:hover .dropdown-content {
   display: block;
 }
+
+a {
+  text-decoration: none;
+}
