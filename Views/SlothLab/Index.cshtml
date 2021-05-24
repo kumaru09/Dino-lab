@@ -32,12 +32,12 @@
 <div id="lab">
     <div class="item-info" style="flex-direction: column; align-items: center;">
         @{
-            string tail1 = Convert.ToString(ViewBag.Lab.GetProperty("imageUrl"));
+            string tail1 = Convert.ToString(ViewBag.lab.GetProperty("imageUrl"));
             string src1 = ViewBag.rootapi + tail1;
             <div class="item-image" style="background-image: url(@src1); height: 200px;"> </div>
         }
         <div>
-            <h5>อุปกรณ์ : @(ViewBag.Lab.GetProperty("itemName")) </h5>
+            <h5>อุปกรณ์ : @(ViewBag.lab.GetProperty("itemName")) </h5>
         </div>
     </div>
 
@@ -71,7 +71,7 @@
                                 }
                                 else
                                 {
-                                    var bookSlotTable = ViewBag.Lab.GetProperty("bookSlotTable");
+                                    var bookSlotTable = ViewBag.lab.GetProperty("bookSlotTable");
                                     var row = r - 1;
                                     string chk = Convert.ToString(@bookSlotTable[c][row]);
                                     if (chk == "0")
