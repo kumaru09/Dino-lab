@@ -474,7 +474,7 @@ input[type="text"] {
   width: 200px;
   height: auto;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
   background-position: center;
   margin-right: 1rem;
 }
@@ -606,7 +606,7 @@ table, td, th {
 }
 
 th, td {
-  padding: 1vh 1.25vw;
+  padding: 1vh 1.3vw;
   font-size: 1.1em;
   white-space: nowrap;
   display: block;
