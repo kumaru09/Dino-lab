@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Dinolab.Controllers
 {
-    [Authorize(Roles="Admin")]
+    //[Authorize(Roles="Admin")]
     public class AdminController : Controller
     {
         private readonly ILogger<AdminController> _logger;
@@ -37,9 +37,8 @@ namespace Dinolab.Controllers
             {
                 _db.Entry(ItemUpdating).State = EntityState.Modified;
                 _db.SaveChanges();
-                return RedirectToAction("Index");
             }
-            return View();
+            return RedirectToAction("Index");
         }
 
         [Route("viewItem")]
@@ -49,7 +48,7 @@ namespace Dinolab.Controllers
             Console.WriteLine(itemId);
             if (itemId == null)
             {
-                return RedirectToAction("Index"); 
+                return RedirectToAction("Index");
             }
             ItemList itemInfo = await _db.ItemList.FindAsync(itemId);
             if (itemInfo == null)
@@ -61,6 +60,17 @@ namespace Dinolab.Controllers
                 ViewBag.itemInfo = itemInfo;
                 return new JsonResult(itemInfo);
             }
+        }
+
+        [HttpPost]
+        public IActionResult deleteBooking(string id)
+        {
+            if (ModelState.IsValid)
+            {
+                _db.ItemList.Remove(_db.ItemList.Find(id));
+                _db.SaveChanges();
+            }
+             return RedirectToAction("Index");
         }
 
         public IActionResult Privacy()
