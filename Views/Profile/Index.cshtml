@@ -6,14 +6,14 @@
     <h3>Profile</h3>
 </div>
 
-
-<div class="profile-name">
-    <h3 style="font-family: DinoStyle; text-align: left;">Name : xxxxxxxxxx</h3>
+@if(@ViewBag.name != null && @ViewBag.email != null){
+    <div class="profile-name">
+    <h3 style="text-align: left;">Name : @ViewBag.name</h3>
 </div>
 <div class="profile-email">
-    <h3 style="font-family: DinoStyle; text-align: left;">Email : 6101xxxx@kmitl.ac.th</h3>
+    <h3 style="text-align: left;">Email : @ViewBag.email</h3>
 </div>
-
+}
 
 <br><br>
 
@@ -21,49 +21,24 @@
     <h3>Booking History</h3>
 </div>
 
-<div class="item-info">
-    <div class="item-image"></div>
-    <div class="item-detail">
-    <p>อุปกรณ์ : Arduino </p>
-    <div class="item-space">
-        <br><br>
-    </div>
-    <p>จำนวน : x</p>
-    <div class="item-space">
-        <br><br>
-    </div>
-    <p>เวลาที่ยืม : xx:xx - xx:xx</p>
-    </div>
-</div>
-
-<div class="item-info">
-    <div class="item-image"></div>
-    <div class="item-detail">
-    <p>อุปกรณ์ : Arduino </p>
-    <div class="item-space">
-        <br><br>
-    </div>
-    <p>จำนวน : x</p>
-    <div class="item-space">
-        <br><br>
-    </div>
-    <p>เวลาที่ยืม : xx:xx - xx:xx</p>
-    </div>
-</div>
-
-<div class="item-info">
-    <div class="item-image"></div>
-    <div class="item-detail">
-    <p>อุปกรณ์ : Arduino </p>
-    <div class="item-space">
-        <br><br>
-    </div>
-    <p>จำนวน : x</p>
-    <div class="item-space">
-        <br><br>
-    </div>
-    <p>เวลาที่ยืม : xx:xx - xx:xx</p>
-    </div>
-</div>
-
-
+@if (ViewBag.res != null)
+{   
+    string[] itemName = {"Arduino","Hantek","3D printer","FPGA","Raspberry pi"};
+    for (int i = 1; i <= ViewBag.res.Length/3 ; i++)
+    {
+        <div class="item-info">
+            <div class="item-image"></div>
+            <div class="item-detail">
+                <p>อุปกรณ์ : @itemName[Convert.ToInt32(ViewBag.res[(ViewBag.res.Length/3)-i,0])]</p>
+                <div class="item-space">
+                    <br><br>
+                </div>
+                <p>วันที่ยืม : @ViewBag.res[(ViewBag.res.Length/3)-i,1].Substring(0, 10)</p>
+                <div class="item-space">
+                    <br><br>
+                </div>
+                <p>เวลาที่ยืม : @ViewBag.res[(ViewBag.res.Length/3)-i,1].Substring(11, 8) - @ViewBag.res[(ViewBag.res.Length/3)-i,2]</p>
+            </div>
+        </div>
+    }
+}

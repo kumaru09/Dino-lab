@@ -5,15 +5,16 @@
 <div class="topic-with-line">
     <h3>Currently Booked List</h3>
 </div>
-
+ 
 @if (ViewBag.res != null)
 {
+    string[] itemName = {"Arduino","Hantek","3D printer","FPGA","Raspberry pi"};
     for (int i = 0; i < ViewBag.res.Length / 3; i++)
     {
         <div class="item-info">
             <div class="item-image"></div>
             <div class="item-detail">
-                <p>อุปกรณ์ : @ViewBag.res[i,0]</p>
+                <p>อุปกรณ์ : @itemName[Convert.ToInt32(ViewBag.res[i,0])]</p>
                 <div class="item-space">
                     <br><br>
                 </div>

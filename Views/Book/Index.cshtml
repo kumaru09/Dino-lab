@@ -37,8 +37,7 @@
                 string curTime = ViewBag.curTime;
                 string maxHr = ViewBag.maxHr;
                 <p>อุปกรณ์ : @ViewBag.itemName </p>
-                <label for="inputNum">จำนวน : </label>
-                <input id="inputNum" type="number" min="1" max="10" value="1">
+                <label>จำนวน :  1 ชิ้น</label>
                 <br><br>
                 <label for="inputDay">วันที่ยืม : </label>
                 <input id="inputDay" type="date" min="@(inputDate.ToString("yyyy-MM-dd"))"
