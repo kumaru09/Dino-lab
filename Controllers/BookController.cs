@@ -33,13 +33,15 @@ namespace Dinolab.Controllers
             string maxHr = "7";
             if (chkmaxhr == -1)
             {
-                if(chkminhr == 1){
+                if (chkminhr == 1)
+                {
                     curTime = startDate.ToString("HH") + ":00";
                     int intTime = Convert.ToInt32(startDate.ToString("HH"));
                     maxHr = Convert.ToString(16 - intTime);
                 }
             }
-            else {
+            else
+            {
                 startDate = startDate.AddDays(1);
             }
 
@@ -48,8 +50,9 @@ namespace Dinolab.Controllers
             ViewBag.maxHr = maxHr;
 
             LabList Lab = await _db.LabList.FindAsync(id);
-            
-            if (Lab == null) {
+
+            if (Lab == null)
+            {
                 return NotFound();
             }
 
@@ -58,45 +61,53 @@ namespace Dinolab.Controllers
             DateTime _startDate = DateTime.UtcNow.AddHours(7).Date;
             if (chkmaxhr == 1) _startDate = _startDate.AddDays(1);
             DateTime endDate = _startDate.AddDays(14).Date;
-            
+
             IEnumerable<BookingList> booked = _db.BookingList.Where(BookingList => (Lab.LabId == BookingList.EqId) && (BookingList.Date.Date < endDate)
             && (_startDate <= BookingList.Date.Date));
 
-            int[,] BookTable = new int[14,7];
-            for (int i = 0; i < 14; i++) {
-                for (int j = 0; j < 7; j++) {
+            int[,] BookTable = new int[14, 7];
+            for (int i = 0; i < 14; i++)
+            {
+                for (int j = 0; j < 7; j++)
+                {
                     IEnumerable<BookingList> countBook = booked.Where(BookingList => _startDate.AddDays(i).Date == BookingList.Date.Date && BookingList.Date.Hour == j + 9);
-                    if (BookTable[i,j] == 0 && countBook.Count() == 0) {
-                        BookTable[i,j] = item.Amount;
+                    if (BookTable[i, j] == 0 && countBook.Count() == 0)
+                    {
+                        BookTable[i, j] = item.Amount;
                     }
-                    else if (countBook.Count() == 0 && BookTable[i,j] != 0) {
-                        BookTable[i,j] = item.Amount - BookTable[i,j];
+                    else if (countBook.Count() == 0 && BookTable[i, j] != 0)
+                    {
+                        BookTable[i, j] = item.Amount - BookTable[i, j];
                     }
-                    else if (countBook.Count() != 0) {
-                        foreach (BookingList b in countBook) {
+                    else if (countBook.Count() != 0)
+                    {
+                        foreach (BookingList b in countBook)
+                        {
                             int r = j;
-                            for (int c = b.Time; c > 0; c--) {
-                                BookTable[i,r]++;
+                            for (int c = b.Time; c > 0; c--)
+                            {
+                                BookTable[i, r]++;
                                 r++;
                             }
                         }
-                        BookTable[i,j] = item.Amount - BookTable[i,j];
+                        BookTable[i, j] = item.Amount - BookTable[i, j];
                     }
                 }
             }
             ViewBag.Booktable = BookTable;
 
-            string[] itemName = {"Arduino","Hantek","3D printer","FPGA","Raspberry pi"};
-            ViewBag.itemName = itemName[id-1]; 
+            string[] itemName = { "Arduino", "Hantek", "3D printer", "FPGA", "Raspberry pi" };
+            ViewBag.itemName = itemName[id - 1];
             ViewBag.id = id;
 
             return View();
         }
 
-         [HttpPost]
+        [HttpPost]
         public IActionResult Booking(int id, DateTime date, DateTime time, int hour)
         {
-                if (!string.IsNullOrEmpty(HttpContext.Session.GetString("Token"))) {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("Token")))
+            {
                 var steam = HttpContext.Session.GetString("Token");
                 var tokens = new JwtSecurityTokenHandler().ReadJwtToken(steam);
 
@@ -104,21 +115,21 @@ namespace Dinolab.Controllers
                 var userRole = tokens.Claims.First(claim => claim.Type == "role").Value;
 
                 //check blacklist user
-                if(userRole == "Blacklist") return RedirectToAction("Index", "Home");
+                if (userRole == "Blacklist") return RedirectToAction("Index", "Home");
 
                 //insert record to database
                 BookingList booking = new BookingList();
                 booking.UserId = userId;
                 booking.EqId = id;
-                booking.Date = date;
-                booking.Time = time.Hour;
+                booking.Date = date.AddHours(time.Hour);
+                booking.Time = hour;
+                Console.WriteLine(date);
 
                 _db.BookingList.Add(booking);
                 _db.SaveChanges();
 
-                int lastBookId = booking.BookId;
-                return RedirectToAction("index", "Book", new {id = 1});
-                }
+                return RedirectToAction("index", "Book", new { id = id });
+            }
             return RedirectToAction("Index", "Home");
         }
 

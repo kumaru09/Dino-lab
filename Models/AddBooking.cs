@@ -13,9 +13,7 @@ namespace Dinolab.Models
         [Required]
         public int EqId { get; set; }
         [Required]
-        public int Amount { get; set; }
-        [Required]
-        [DataType(DataType.Date)]
+        [DataType(DataType.DateTime)]
         public DateTime Date { get; set; }
         [Required]
         public int Time { get; set; }
