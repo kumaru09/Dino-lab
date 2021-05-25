@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Dinolab.Models;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Http;
 
 namespace Dinolab.Controllers
 {
@@ -89,6 +91,35 @@ namespace Dinolab.Controllers
             ViewBag.id = id;
 
             return View();
+        }
+
+         [HttpPost]
+        public IActionResult Booking(int id, DateTime date, DateTime time, int hour)
+        {
+                if (!string.IsNullOrEmpty(HttpContext.Session.GetString("Token"))) {
+                var steam = HttpContext.Session.GetString("Token");
+                var tokens = new JwtSecurityTokenHandler().ReadJwtToken(steam);
+
+                var userId = tokens.Claims.First(claim => claim.Type == "Id").Value;
+                var userRole = tokens.Claims.First(claim => claim.Type == "role").Value;
+
+                //check blacklist user
+                if(userRole == "Blacklist") return RedirectToAction("Index", "Home");
+
+                //insert record to database
+                BookingList booking = new BookingList();
+                booking.UserId = userId;
+                booking.EqId = id;
+                booking.Date = date;
+                booking.Time = time.Hour;
+
+                _db.BookingList.Add(booking);
+                _db.SaveChanges();
+
+                int lastBookId = booking.BookId;
+                return RedirectToAction("index", "Book", new {id = 1});
+                }
+            return RedirectToAction("Index", "Home");
         }
 
         public IActionResult Privacy()

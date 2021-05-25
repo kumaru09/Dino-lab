@@ -2,19 +2,22 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Dinolab
+namespace Dinolab.Models
 {
-    public class BookingList
+    public class AddBooking
     {
-        [Key] 
+        [Required]
         public int BookId { get; set; }
+        [Required]
         public string UserId { get; set; }
-
-        [ForeignKey("ItemList")]
+        [Required]
         public int EqId { get; set; }
-
+        [Required]
+        public int Amount { get; set; }
+        [Required]
         [DataType(DataType.Date)]
         public DateTime Date { get; set; }
+        [Required]
         public int Time { get; set; }
     }
 }
