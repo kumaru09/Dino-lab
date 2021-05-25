@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Dinolab.Controllers
 {
-    [Authorize(Roles="Admin")]
+    //[Authorize(Roles="Admin")]
     public class BlacklistController : Controller
     {
         private readonly UserManager<IdentityUser> _userManager;
@@ -23,8 +23,27 @@ namespace Dinolab.Controllers
             _userManager = userManager;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            var blackListUser = await _userManager.GetUsersInRoleAsync("Blacklist");
+            string[,] userData = new string[2, blackListUser.Count];
+            var i = 0;
+            var j = 0;
+            foreach (var user in blackListUser)
+            {
+                userData[0, i] = user.UserName;
+                userData[1, i] = user.Id;
+                i++;
+            }
+            ViewBag.blackListData = userData;
+            ViewBag.dataCount = blackListUser.Count;
+            Console.WriteLine(ViewBag.dataCount);
+            foreach (var user in blackListUser)
+            {
+                Console.WriteLine(ViewBag.blackListData[0, j]);
+                Console.WriteLine(ViewBag.blackListData[1, j]);
+                j++;
+            }
             return View();
         }
 
@@ -36,83 +55,58 @@ namespace Dinolab.Controllers
         // Add and Remove BlackList using ID of user
         [Route("AddBlackList")]
         [HttpPost]
-        public async Task<IActionResult> AddBlackList([FromBody] IdentityUser user)
+        public async Task<IActionResult> AddBlackList(string username)
         {
-            if (ModelState.IsValid)
+            var blackListUser = await _userManager.FindByNameAsync(username);
+            var userId = await _userManager.GetUserIdAsync(blackListUser);
+            var idObj = await _userManager.FindByIdAsync(userId);
+            var oldRole = await _userManager.GetRolesAsync(idObj);
+            if (oldRole != null)
             {
-                var oldRole = await _userManager.GetRolesAsync(user);
-                var blackListUser = await _userManager.FindByIdAsync(user.Id);
-                if (oldRole != null)
+                foreach (var role in oldRole)
                 {
-                    foreach (var role in oldRole)
+                    if (role != "Blacklist")
                     {
-                        if (role != "Blacklist")
-                        {
-                            var remove = await _userManager.RemoveFromRoleAsync(blackListUser, role);
-                        }
-                        else
-                        {
-                            return new JsonResult("This User is already in BlackList");
-                        }
-
+                        var remove = await _userManager.RemoveFromRoleAsync(idObj, role);
                     }
-                    var presentRole = await _userManager.AddToRoleAsync(blackListUser, "Blacklist");
-                    var newRole = _userManager.GetRolesAsync(user);
-                    return RedirectToAction("Index");
-                }
-                return BadRequest(new JsonResult("This user doesn't has a role!"));
+                    else
+                    {
+                        return new JsonResult("This User is already in BlackList");
+                    }
 
+                }
+                var presentRole = await _userManager.AddToRoleAsync(idObj, "Blacklist");
+                var newRole = _userManager.GetRolesAsync(idObj);
+                return RedirectToAction("Index");
             }
-            return RedirectToAction("Index");
+            return BadRequest(new JsonResult("This user doesn't has a role!"));
         }
 
         [Route("RemoveBlackList")]
         [HttpPost]
-        public async Task<IActionResult> RemoveBlackList([FromBody] IdentityUser user)
+        public async Task<IActionResult> RemoveBlackList(string id)
         {
-            if (ModelState.IsValid)
+            var blackListUser = await _userManager.FindByIdAsync(id);
+            var oldRole = await _userManager.GetRolesAsync(blackListUser);
+            if (oldRole != null)
             {
-                var oldRole = await _userManager.GetRolesAsync(user);
-                var blackListUser = await _userManager.FindByIdAsync(user.Id);
-                if (oldRole != null)
+                foreach (var role in oldRole)
                 {
-                    foreach (var role in oldRole)
+                    if (role != "User")
                     {
-                        if (role != "User")
-                        {
-                            var remove = await _userManager.RemoveFromRoleAsync(blackListUser, role);
-                        }
-                        else
-                        {
-                            return new JsonResult("This User is already in a User role");
-                        }
-
+                        var remove = await _userManager.RemoveFromRoleAsync(blackListUser, role);
                     }
-                    var presentRole = await _userManager.AddToRoleAsync(blackListUser, "User");
-                    var newRole = _userManager.GetRolesAsync(user);
-                    return RedirectToAction("Index");
+                    else
+                    {
+                        return new JsonResult("This User is already in a User role");
+                    }
+
                 }
-                return BadRequest(new JsonResult("This user doesn't has a role!"));
-
+                var presentRole = await _userManager.AddToRoleAsync(blackListUser, "User");
+                var newRole = await _userManager.GetRolesAsync(blackListUser);
+                return RedirectToAction("Index");
             }
-            return RedirectToAction("Index");
-        }
-
-        [Route("ViewBlackList")]
-        [HttpGet]
-        public async Task<IActionResult> getBlackList()
-        {
-            var blackListUser = await _userManager.GetUsersInRoleAsync("Blacklist");
-            string[,] userData = new string[blackListUser.Count,blackListUser.Count];
-            var i = 0;
-            foreach (var user in blackListUser)
-            {
-                userData[i,0] = user.UserName;
-                userData[0,i] = user.Id;
-                i++;
-            } 
-            ViewBag.blackListData = userData;
-            return RedirectToAction("Index");
+            return BadRequest(new JsonResult("This user doesn't has a role!"));
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
