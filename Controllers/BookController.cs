@@ -128,7 +128,7 @@ namespace Dinolab.Controllers
                 _db.BookingList.Add(booking);
                 _db.SaveChanges();
 
-                return RedirectToAction("index", "Book", new { id = id });
+                return Redirect("/Book/?id=" + Convert.ToString(id));
             }
             return RedirectToAction("Index", "Home");
         }

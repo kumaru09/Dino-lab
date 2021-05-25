@@ -31,7 +31,7 @@
 <div class="item-info">
     <div class="item-image" style="background-image: url(../Dino_item.png);"></div>
     <div class="item-detail">
-        <form method="POST"  asp-controller="Book" asp-action="Booking">
+        <form method="POST" asp-controller="Book" asp-action="Booking">
             @{
                 DateTime inputDate = ViewBag.startDate;
                 string curTime = ViewBag.curTime;
@@ -47,8 +47,8 @@
                 <br><br>
                 <label for="inputTime">เวลาที่ยืม : </label>
                 <input id="inputTime" type="time" min="@curTime" max="15:00" value="@curTime" name="time" readonly required>
-                <input type="button" name="time" onclick="timeStepUp()" value="เพิ่ม">
-                <input type="button" name="time" onclick="timeStepDown()" value="ลด">
+                <input type="button" name="timestep" onclick="timeStepUp()" value="เพิ่ม">
+                <input type="button" name="timestep" onclick="timeStepDown()" value="ลด">
                 <br><br>
                 <label for="inputHr">จำนวนชั่วโมงที่ยืม : </label>
                 <input id="inputHr" type="number" min="1" max="@maxHr" value="1" name="hour">
@@ -97,12 +97,4 @@
 
 <script>
     document.getElementById("lab" + @(Convert.ToString(ViewBag.id))).className += " tab-active";
-
-    function getLab() {
-        var lab = document.getElementsByClassName("tablist-item tab-active");
-        var ladId = document.getElementById("labId");
-        //console.log(typeof lab[0].id);
-        labId.setAttribute('name', 'id');
-        labId.setAttribute('value', lab[0].id);
-    }
 </script>
